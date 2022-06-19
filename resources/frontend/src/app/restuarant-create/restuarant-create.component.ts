@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-restuarant-create',
@@ -14,14 +14,32 @@ export class RestuarantCreateComponent implements OnInit {
     description: new FormControl(null, Validators.required),
     location: new FormControl(null, Validators.required),
     rating: new FormControl(null, Validators.required),
-    food_items: new FormControl([], Validators.required)
+    food_items: new FormArray([])
   });
 
   constructor() {
+    this.addFood();
+  }
+
+  addFood() {
+    const formArray = this.form.get('food_items') as FormArray;
+    formArray.push(new FormGroup({
+      name: new FormControl(null, Validators.required),
+      price: new FormControl(null, Validators.required)
+    }));
+  }
+
+  removeFood(index: number) {
+    (this.form.get('food_items') as FormArray).removeAt(index);
   }
 
   ngOnInit(): void {
   }
 
-  submit() {}
+  public get foodItems(): FormGroup[] {
+    return (this.form.get('food_items') as FormArray).controls as FormGroup[];
+  }
+
+  submit() {
+  }
 }
