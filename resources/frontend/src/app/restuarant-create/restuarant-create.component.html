@@ -1,23 +1,60 @@
 <div class="row">
-  <div class="offset-lg-3 col-lg-6 col-md-9 col-sm-12">
+  <div class="col-lg-9 col-md-9 col-sm-12">
     <div class="card">
       <div class="card-body">
         <h4>Create New Restaurant</h4>
-        <form>
-          <div class="form-group">
-            <label for="exampleInputEmail1">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="row">
+            <div class="col-lg-5">
+              <div class="form-group">
+                <label for="exampleInputTitle">Title</label>
+                <input type="text" class="form-control" id="exampleInputTitle" aria-describedby="titleHelp">
+                <small id="titleHelp" class="form-text text-danger">Title is required</small>
+              </div>
+              <div class="form-group">
+                <label for="exampleInputDescription">Description</label>
+                <textarea class="form-control" id="exampleInputDescription" aria-describedby="descriptionHelp"></textarea>
+                <small id="descriptionHelp" class="form-text text-danger">Description is required</small>
+              </div>
+
+              <div class="form-group">
+                <label for="exampleInputImage">Image</label>
+                <input type="file" class="form-control" id="exampleInputImage"
+                       aria-describedby="exampleInputImageHelp" />
+                <small id="exampleInputImageHelp" class="form-text text-danger">Image is required</small>
+              </div>
+
+              <div class="form-group">
+                <label for="exampleInputLocation">Location</label>
+                <textarea class="form-control" id="exampleInputLocation"
+                          aria-describedby="exampleInputLocationHelp"></textarea>
+                <small id="exampleInputLocationHelp" class="form-text text-danger">Location is required</small>
+              </div>
+
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+
+            <div class="col-lg-7">
+              <div class="border border-light p-2">
+                <label>Food Item 1</label>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="form-group mb-2">
+                    <label for="staticEmail2" class="sr-only">Item Name</label>
+                    <input type="text" class="form-control" id="staticEmail2">
+                  </div>
+                  <div class="form-group mx-sm-3 mb-2">
+                    <label for="inputPassword2" class="sr-only">Item Price</label>
+                    <input type="text" class="form-control" id="inputPassword2">
+                  </div>
+                </div>
+                <div class="d-flex justify-content-start align-items-center mt-2">
+                  <button class="btn btn-xs btn-light">
+                    <i class="fa fa-plus"></i>
+                  </button>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="exampleInputPassword1">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1">
-          </div>
-          <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="exampleCheck1">
-            <label class="form-check-label" for="exampleCheck1">Check me out</label>
-          </div>
-          <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
     </div>
