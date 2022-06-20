@@ -8,6 +8,9 @@ import {RestuarantCreateComponent} from './restuarant-create/restuarant-create.c
 import {RestuarantDetailsComponent} from './restuarant-details/restuarant-details.component';
 import {RestuarantDeleteComponent} from './restuarant-delete/restuarant-delete.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import {ReactiveFormsModule} from "@angular/forms";
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]

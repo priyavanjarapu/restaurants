@@ -20,10 +20,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 // Defining API route for restuarant
-Route::group(['prefix' => 'restuarants'], function () {
+Route::group(['prefix' => 'restaurants'], function () {
     Route::get('', [RestaurantsController::class, 'index']);
-    Route::get('/{id}', [RestaurantsController::class, 'fetchResturant']);
+    Route::get('/{id}', [RestaurantsController::class, 'fetchRestaurant']);
     Route::post('', [RestaurantsController::class, 'store']);
     Route::post('/update/{id}', [RestaurantsController::class, 'update']);
     Route::post('/delete/{id}', [RestaurantsController::class, 'delete']);
+
+    Route::post('/image', [RestaurantsController::class, 'image']);
 });
