@@ -1,4 +1,8 @@
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { environment } from 'src/environments/environment';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-restuarant-list',
@@ -7,9 +11,39 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RestuarantListComponent implements OnInit {
 
-  constructor() { }
+  public restaurants: any[] = [];
+  public formControl = new FormControl();
+  public imageUrl = environment.apiURL.replace('/public/api', '');
+  constructor(
+    private httpClient: HttpClient
+  ) { }
 
   ngOnInit(): void {
+    this.getRestaurants('');
+    this.formControl.valueChanges
+      .pipe(
+        debounceTime(400)
+      )
+      .subscribe(text => this.getRestaurants(text));
   }
 
+  getRestaurants(searchText: any) {
+    let httpParams = new HttpParams();
+    if (searchText) {
+      httpParams = httpParams.append('title', searchText);
+    }
+
+    this.httpClient.get(environment.apiURL + '/restaurants')
+      .subscribe((response: any) => {
+        console.log(response);
+        if (response.data && response.data.length) {
+          response.data.forEach((item: any) => {
+            item.food_items = JSON.parse(item.food_items);
+          });
+          this.restaurants = response.data.slice() || [];
+        }
+
+        console.log(this.restaurants);
+      });
+  }
 }

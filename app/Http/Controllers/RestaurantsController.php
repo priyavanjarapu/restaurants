@@ -5,15 +5,25 @@ namespace App\Http\Controllers;
 use App\Models\Restaurants;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 
 class RestaurantsController extends Controller
 {
     // Get the list of ALL restuarants from the database
     public function index(Request $request)
     {
-        $restuarants = Restaurants::all();
+        $title = Str::lower($request->title);
 
-        return response($restuarants, 200);
+        $restaurants = Restaurants::query();
+
+        if ($title) {
+            $restaurants = $restaurants->where('title', 'LIKE', '%' . $title . '%');
+        }
+
+        $data = $restaurants->get();
+        $success['message'] = 'Successfully fetched';
+
+        return response($success, 200);
     }
 
     // Fetch specific restuarant details
@@ -24,7 +34,7 @@ class RestaurantsController extends Controller
     // Store restuarant details into database
     public function store(Request $request)
     {
-        $data = $request -> all();
+        $data = $request->all();
         $validator = Validator::make($data, [
             'title' => 'required | string',
             'description' => 'required | string',
@@ -34,17 +44,17 @@ class RestaurantsController extends Controller
             'food_items' => 'required | json',
         ]);
 
-        if ($validator -> fails()) {
-            return response($validator -> errors(), 400);
+        if ($validator->fails()) {
+            return response($validator->errors(), 400);
         }
 
         $restaurant = Restaurants::create([
-            'title' => $request -> title,
-            'description' => $request -> description,
-            'image' => $request -> image,
-            'location' => $request -> location,
-            'rating' => $request -> rating,
-            'food_items' => $request -> food_items
+            'title' => $request->title,
+            'description' => $request->description,
+            'image' => $request->image,
+            'location' => $request->location,
+            'rating' => $request->rating,
+            'food_items' => $request->food_items
         ]);
         if (!$restaurant) {
             return response('Something went wrong', 500);
@@ -63,17 +73,18 @@ class RestaurantsController extends Controller
     }
 
     // Upload image processor API
-    public function image(Request $request) {
-        $data = $request -> all();
+    public function image(Request $request)
+    {
+        $data = $request->all();
         $validator = Validator::make($data, [
             'image' => 'required | image | max: 2048'
         ]);
 
-        if ($validator -> fails()) {
-            return response($validator -> errors(), 400);
+        if ($validator->fails()) {
+            return response($validator->errors(), 400);
         }
 
-        $filepath = '/storage/app/'.$request->file('image')->store('public');
+        $filepath = '/storage/app/' . $request->file('image')->store('public');
 
         return response(['data' => $filepath], 200);
     }
