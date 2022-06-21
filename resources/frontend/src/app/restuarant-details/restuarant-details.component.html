@@ -1,1 +1,10 @@
-<p>restuarant-details works!</p>
+<div class="row" *ngIf="details?.id">
+    <div class="col-lg-6">
+        <div class="card">
+            <img [src]="imgUrl + details.image" class="card-img-top" alt="">
+            <div class="card-body">
+                <h4>{{ details.title }}</h4>
+            </div>
+        </div>
+    </div>
+</div>

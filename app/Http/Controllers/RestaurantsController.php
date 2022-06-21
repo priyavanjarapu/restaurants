@@ -21,6 +21,11 @@ class RestaurantsController extends Controller
         }
 
         $data = $restaurants->get();
+        foreach ($data as $item) {
+            $item->food_items = json_decode($item->food_items);
+        }
+
+        $success['data'] = $data;
         $success['message'] = 'Successfully fetched';
 
         return response($success, 200);
@@ -29,6 +34,14 @@ class RestaurantsController extends Controller
     // Fetch specific restuarant details
     public function fetchRestaurant($id)
     {
+        $restaurant = Restaurants::where('id', $id)->get()->first();
+        if (!$restaurant) {
+            return response(['data' => null, 'message' => 'No Restaurant found with given ID'], 404);
+        }
+
+        $restaurant->food_items = json_decode($restaurant->food_items);
+
+        return response(['data' => $restaurant, 'message' => 'Fetched successfully'], 200);
     }
 
     // Store restuarant details into database

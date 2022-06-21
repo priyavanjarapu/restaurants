@@ -1,4 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-restuarant-details',
@@ -7,9 +10,23 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RestuarantDetailsComponent implements OnInit {
 
-  constructor() { }
+  public details: any = {};
+  public imgUrl = environment.apiURL.replace('/public/api', '');
+  constructor(
+    private httpClient: HttpClient,
+    private activatedRoute: ActivatedRoute
+  ) {
+    this.activatedRoute.params.subscribe(params => this.getDetails(params['id']));
+  }
 
   ngOnInit(): void {
   }
 
+  getDetails(id: string) {
+    this.httpClient.get(`${environment.apiURL}/restaurants/${id}`)
+      .subscribe((response: any) => {
+        console.log(response);
+        this.details = response.data;
+      });
+  }
 }

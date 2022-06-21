@@ -9,13 +9,15 @@
       <ul class="list-group list-group-flush">
         <li class="list-group-item d-flex justify-content-between align-items-center"
           *ngFor="let fd of (item.food_items || [])">
-          <span>{{ fd.name }}</span>
+          <div class="d-inline-flex justify-content-start align-items-center">
+            <i class="fa fa-cutlery mr-2 text-primary"></i>
+            <span>{{ fd.name }}</span>
+          </div>
           <span>{{ fd.price }}</span>
         </li>
       </ul>
       <div class="card-body">
-        <a href="#" class="card-link">Card link</a>
-        <a href="#" class="card-link">Another link</a>
+        <a [routerLink]="['../details', item.id]" class="card-link">More Details</a>
       </div>
     </div>
   </div>

@@ -37,9 +37,6 @@ export class RestuarantListComponent implements OnInit {
       .subscribe((response: any) => {
         console.log(response);
         if (response.data && response.data.length) {
-          response.data.forEach((item: any) => {
-            item.food_items = JSON.parse(item.food_items);
-          });
           this.restaurants = response.data.slice() || [];
         }
 
