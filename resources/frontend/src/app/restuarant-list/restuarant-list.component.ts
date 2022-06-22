@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 import { debounceTime } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-restuarant-list',
@@ -15,7 +16,8 @@ export class RestuarantListComponent implements OnInit {
   public formControl = new FormControl();
   public imageUrl = environment.apiURL.replace('/public/api', '');
   constructor(
-    private httpClient: HttpClient
+    private httpClient: HttpClient,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -41,6 +43,19 @@ export class RestuarantListComponent implements OnInit {
         }
 
         console.log(this.restaurants);
+      });
+  }
+
+  deleteRestaurant(id: string, index: number) {
+    this.httpClient.post(environment.apiURL + '/restaurants/delete/' + id, {})
+      .subscribe((response: any) => {
+        console.log(response);
+        this.restaurants.splice(index, 1);
+        this.snackBar.open(response.message, '', {
+          duration: 3000, verticalPosition: 'top'
+        });
+      }, (error: any) => {
+        console.log(error);
       });
   }
 }

@@ -4,7 +4,36 @@
             <img [src]="imgUrl + details.image" class="card-img-top" alt="">
             <div class="card-body">
                 <h4>{{ details.title }}</h4>
+                <p>{{ details.description }}</p>
+
+
+                <div class="d-flex justify-content-center align-items-center mt-3">
+                    <a [routerLink]="['../../add']" [queryParams]="{id: details.id}" class="btn btn-primary">
+                        Update
+                    </a>
+                </div>
             </div>
+        </div>
+    </div>
+
+    <div class="col-lg-6">
+        <h4>Menu</h4>
+
+        <div class="list-group mt-2">
+            <a *ngFor="let item of details.food_items"
+                class="list-group-item list-group-item-action d-flex justify-content-center align-items-center">
+
+                <div class="d-flex justify-content-between align-items-center w-100">
+                    <div class="d-inline-flex mr-3">
+                        <i class="fa fa-cutlery text-primary"></i>
+                    </div>
+                    <div class="d-flex flex-grow-1 justify-content-between">
+                        <h5 class="mb-1">{{ item.name }}</h5>
+                        <p class="mb-1"><strong>£{{ item.price }}</strong></p>
+                    </div>
+                </div>
+
+            </a>
         </div>
     </div>
 </div>

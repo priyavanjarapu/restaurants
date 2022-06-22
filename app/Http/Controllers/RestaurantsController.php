@@ -78,11 +78,28 @@ class RestaurantsController extends Controller
     // Update specific restuarant details in the database
     public function update(Request $request, $id)
     {
+        $restaurant = Restaurants::where('id', $id)->get()->first();
+        if (!$restaurant) {
+            return response(['data' => null, 'message' => 'Restaurant not found'], 404);
+        }
+
+        $restaurant->update($request->all());
+
+        return response(['data' => $restaurant, 'message' => 'Updated Successfully'], 200);
     }
 
     // Delete specific restuarant from the database
     public function delete($id)
     {
+        $restaurant = Restaurants::where('id', $id)->get()->first();
+
+        if (!$restaurant) {
+            return response(['data' => null, 'message' => 'Restaurant not found'], 404);
+        }
+
+        $restaurant->delete();
+
+        return response(['data' => $restaurant, 'message' => 'Restaurant deleted successfully'], 200);
     }
 
     // Upload image processor API
