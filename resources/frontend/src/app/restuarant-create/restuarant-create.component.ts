@@ -3,7 +3,7 @@ import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { HttpClient } from "@angular/common/http";
 import { environment } from "../../environments/environment";
 import { MatSnackBar } from "@angular/material/snack-bar";
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-restuarant-create',
@@ -27,7 +27,8 @@ export class RestuarantCreateComponent implements OnInit {
   constructor(
     private httpClient: HttpClient,
     private snackBar: MatSnackBar,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private router: Router
   ) {
     this.addFood();
     this.activatedRoute.queryParams.subscribe(params => {
@@ -87,6 +88,7 @@ export class RestuarantCreateComponent implements OnInit {
           verticalPosition: 'top',
           horizontalPosition: 'center'
         });
+        this.router.navigate(['/restaurants/list']);
       }, (error: any) => {
         console.error(error);
         this.snackBar.open(`Something went wrong, please try again`, '', { duration: 3000, verticalPosition: 'top' });
