@@ -12,6 +12,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 })
 export class RestuarantListComponent implements OnInit {
 
+  public restaurantDelete: any = {};
   public restaurants: any[] = [];
   public formControl = new FormControl();
   public imageUrl = environment.apiURL.replace('/public/api', '');

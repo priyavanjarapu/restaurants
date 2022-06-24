@@ -18,8 +18,14 @@
       </ul>
       <div class="card-body">
         <a [routerLink]="['../details', item.id]" class="card-link">More Details</a>
-        <a (click)="deleteRestaurant(item.id, index)" class="card-link text-danger ml-3"
-          style="cursor: pointer;">Delete</a>
+        <a *ngIf="!restaurantDelete[item.id]" (click)="restaurantDelete[item.id] = !restaurantDelete[item.id]"
+          class="card-link text-danger ml-3" style="cursor: pointer;">Delete</a>
+
+        <a class="card-link text-danger ml-3 pointer" *ngIf="restaurantDelete[item.id]"
+          (click)="deleteRestaurant(item.id, index)" style="cursor: pointer;">Confirm Delete?</a>
+
+        <a class="card-link text-dark ml-3 pointer" *ngIf="restaurantDelete[item.id]"
+          (click)="restaurantDelete[item.id] = !restaurantDelete[item.id]" style="cursor: pointer;">Cancel</a>
       </div>
     </div>
   </div>
